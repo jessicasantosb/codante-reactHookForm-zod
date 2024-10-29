@@ -1,7 +1,10 @@
-import { ComponentPropsWithRef } from "react";
+import { cn } from "../../lib/utils";
+import { ButtonProps } from "../../utils/types";
 
-type ButtonProps = ComponentPropsWithRef<"button">;
-
-export function Button({ children, ...props }: ButtonProps) {
-  return <button {...props}>{children}</button>;
+export function Button({ children, className, ...props }: ButtonProps) {
+  return (
+    <button className={cn("", className)} {...props}>
+      {children}
+    </button>
+  );
 }

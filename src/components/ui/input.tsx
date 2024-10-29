@@ -1,6 +1,6 @@
-export function Input() {
+import { cn } from '../../lib/utils';
+import { InputProps } from '../../utils/types';
 
-  return (
-    <input type="text" />
-  );
+export function Input({ className, ...props }: InputProps) {
+  return <input className={cn('', className)} {...props} />;
 }
