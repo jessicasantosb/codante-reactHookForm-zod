@@ -1,5 +1,5 @@
-import { ComponentPropsWithoutRef } from "react";
+import { ComponentPropsWithoutRef } from 'react';
 
-export type InputProps = ComponentPropsWithoutRef<"input">;
+export type InputProps = ComponentPropsWithoutRef<'input'>;
 
-export type ButtonProps = ComponentPropsWithoutRef<"button">;
+export type ButtonProps = ComponentPropsWithoutRef<'button'>;
