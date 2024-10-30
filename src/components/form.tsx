@@ -1,3 +1,5 @@
+import { withMask } from 'use-mask-input';
+
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
@@ -31,17 +33,17 @@ export function Form() {
 
       <Label>
         Número de celular:
-        <Input type='text' />
+        <Input type='text' ref={withMask('(99) 99999-9999')} />
       </Label>
 
       <Label>
         CPF:
-        <Input type='text' />
+        <Input type='text' ref={withMask('999.999.999-99')} />
       </Label>
 
       <Label>
         CEP:
-        <Input type='text' />
+        <Input type='text' ref={withMask('99999-999')} />
       </Label>
 
       <Label>
