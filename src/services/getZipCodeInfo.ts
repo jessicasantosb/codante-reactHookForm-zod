@@ -21,10 +21,15 @@ export const getZipCodeInfo = async (
 
     const data = await response.json();
 
-    setAddress({
-      street: `${data.street} - ${data.neighborhood}`,
-      city: `${data.city}/${data.state}`,
-    });
+    const streetName =
+      ((!data.street || !data.neighborhood) && 'Não encontrado') ||
+      `${data.street} - ${data.neighborhood}`;
+
+    const cityName =
+      ((!data.city || !data.state) && 'Não encontrado') ||
+      `${data.city} - ${data.state}`;
+
+    setAddress({ street: streetName, city: cityName });
   } catch (error) {
     console.error(error);
   }
