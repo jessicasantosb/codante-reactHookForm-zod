@@ -21,12 +21,12 @@ export function Form() {
 
       <Label>
         Senha:
-        <Input type='password' />
+        <Input id='password' />
       </Label>
 
       <Label>
         Confirmar senha:
-        <Input type='password' />
+        <Input id='password' />
       </Label>
 
       <Label>
