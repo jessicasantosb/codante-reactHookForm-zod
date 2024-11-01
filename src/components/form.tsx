@@ -9,15 +9,25 @@ import { Label } from './ui/label';
 
 export function Form() {
   const [address, setAddress] = useState({ street: '', city: '' });
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+  } = useForm();
 
   const handleZipCodeBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const zipcode = e.target.value;
     getZipCodeInfo(zipcode, setAddress);
   };
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: any) => {
+    const response = await fetch(
+      'https://apis.codante.io/api/register-user/register',
+      { method: 'POST', body: JSON.stringify(data) },
+    );
+
+    const result = await response.json();
+
+    console.log(result);
   };
 
   return (
