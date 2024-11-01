@@ -13,6 +13,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       setType(type === 'password' ? 'text' : 'password');
     };
 
+    const checkboxStyle =
+      id === 'checkbox' && 'focus-within:outline-none outline-none border-none';
+
     useEffect(() => {
       if (id === 'password') {
         setIsPassword(true);
@@ -22,7 +25,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <>
-        <div className='flex justify-between rounded-sm border outline-2 group outline-[#4C4B16] focus-within:outline'>
+        <div
+          className={`flex justify-between rounded-sm border outline-2 group outline-[#4C4B16] focus-within:outline ${checkboxStyle}`}>
           <input
             ref={ref}
             type={type}

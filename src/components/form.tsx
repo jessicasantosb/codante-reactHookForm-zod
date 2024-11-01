@@ -41,7 +41,6 @@ export function Form() {
       <h3 className='pb-4 text-2xl text-center text-[#4C4B16] font-bold tracking-wider'>
         Formulário Dinâmico
       </h3>
-
       <Label>
         Nome completo:
         <Input
@@ -56,7 +55,6 @@ export function Form() {
           error={errors.name?.message as string}
         />
       </Label>
-
       <Label>
         Email:
         <Input
@@ -71,7 +69,6 @@ export function Form() {
           error={errors.email?.message as string}
         />
       </Label>
-
       <Label>
         Senha:
         <Input
@@ -86,7 +83,6 @@ export function Form() {
           error={errors.password?.message as string}
         />
       </Label>
-
       <Label>
         Confirmar senha:
         <Input
@@ -101,7 +97,6 @@ export function Form() {
           error={errors.confirmPassword?.message as string}
         />
       </Label>
-
       <Label>
         Número de celular:
         <Input
@@ -116,7 +111,6 @@ export function Form() {
           error={errors.cellphone?.message as string}
         />
       </Label>
-
       <Label>
         CPF:
         <Input
@@ -131,7 +125,6 @@ export function Form() {
           error={errors.cpf?.message as string}
         />
       </Label>
-
       <Label>
         CEP:
         <Input
@@ -147,16 +140,31 @@ export function Form() {
           error={errors.zipcode?.message as string}
         />
       </Label>
-
       <Label>
         Endereço:
         <Input type='text' value={address.street} readOnly />
       </Label>
-
       <Label>
         Cidade:
         <Input type='text' value={address.city} readOnly />
       </Label>
+
+      <div>
+        <div className='flex items-center'>
+          <Input
+            type='checkbox'
+            id='checkbox'
+            className='mr-2 accent-[#4C4B16]'
+          />
+          <Label className='text-sm  font-light text-slate-500 inline'>
+            Aceito os{' '}
+            <span className='underline hover:text-slate-900 cursor-pointer'>
+              termos e condições
+            </span>
+          </Label>
+        </div>
+        <p className='text-red-400 text-xs h-4 select-none'></p>
+      </div>
 
       <Button disabled={isSubmitting} className='mt-4'>
         {isSubmitting ? <Loader className='animate-spin' /> : 'Cadastrar'}
