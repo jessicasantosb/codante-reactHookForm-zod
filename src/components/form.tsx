@@ -155,6 +155,9 @@ export function Form() {
             type='checkbox'
             id='checkbox'
             className='mr-2 accent-[#4C4B16]'
+            {...register('terms', {
+              required: 'Os termos e condições devem ser aceitos',
+            })}
           />
           <Label className='text-sm  font-light text-slate-500 inline'>
             Aceito os{' '}
@@ -163,7 +166,9 @@ export function Form() {
             </span>
           </Label>
         </div>
-        <p className='text-red-400 text-xs h-4 select-none'></p>
+        <p className='text-red-400 text-xs h-4 select-none'>
+          {errors.terms?.message as string}
+        </p>
       </div>
 
       <Button disabled={isSubmitting} className='mt-4'>
