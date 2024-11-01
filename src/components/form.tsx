@@ -1,6 +1,7 @@
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { withMask } from 'use-mask-input';
 
-import { useState } from 'react';
 import { getZipCodeInfo } from '../services/getZipCodeInfo';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -8,31 +9,38 @@ import { Label } from './ui/label';
 
 export function Form() {
   const [address, setAddress] = useState({ street: '', city: '' });
-  
+  const { register, handleSubmit } = useForm();
+
   const handleZipCodeBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const zipcode = e.target.value;
     getZipCodeInfo(zipcode, setAddress);
   };
 
+  const onSubmit = (data: any) => {
+    console.log(data);
+  };
+
   return (
-    <form className='relative max-w-[500px] mx-auto border-2 border-[#4C4B16] bg-white rounded-sm flex flex-col gap-4 p-10'>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className='relative max-w-[500px] mx-auto border-2 border-[#4C4B16] bg-white rounded-sm flex flex-col gap-4 p-10'>
       <h3 className='pb-4 text-2xl text-center text-[#4C4B16] font-bold tracking-wider'>
         Formulário Dinâmico
       </h3>
 
       <Label>
         Nome completo:
-        <Input type='text' />
+        <Input type='text' {...register('name')} />
       </Label>
 
       <Label>
         Email:
-        <Input type='email' />
+        <Input type='email' {...register('email')} />
       </Label>
 
       <Label>
         Senha:
-        <Input id='password' />
+        <Input id='password' {...register('password')} />
       </Label>
 
       <Label>
@@ -61,11 +69,7 @@ export function Form() {
 
       <Label>
         Endereço:
-        <Input
-          type='text'
-          value={address.street}
-          readOnly
-        />
+        <Input type='text' value={address.street} readOnly />
       </Label>
 
       <Label>
