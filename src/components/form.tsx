@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { useHookFormMask } from 'use-mask-input';
 
+import { ErrorMessage } from '@hookform/error-message';
 import { getZipCodeInfo } from '../services/getZipCodeInfo';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -52,7 +53,7 @@ export function Form() {
               message: 'O nome deve ter no máximo 255 caracteres',
             },
           })}
-          error={errors.name?.message as string}
+          error={<ErrorMessage errors={errors} name='name' />}
         />
       </Label>
       <Label>
@@ -66,7 +67,7 @@ export function Form() {
               message: 'Email inválido',
             },
           })}
-          error={errors.email?.message as string}
+          error={<ErrorMessage errors={errors} name='email' />}
         />
       </Label>
       <Label>
@@ -80,7 +81,7 @@ export function Form() {
               message: 'A senha deve ter no mínimo 6 caracteres',
             },
           })}
-          error={errors.password?.message as string}
+          error={<ErrorMessage errors={errors} name='password' />}
         />
       </Label>
       <Label>
@@ -94,7 +95,7 @@ export function Form() {
               message: 'A confirmação de senha deve ter no mínimo 6 caracteres',
             },
           })}
-          error={errors.confirmPassword?.message as string}
+          error={<ErrorMessage errors={errors} name='confirmPassword' />}
         />
       </Label>
       <Label>
@@ -108,7 +109,7 @@ export function Form() {
               message: 'Número de celular inválido',
             },
           })}
-          error={errors.cellphone?.message as string}
+          error={<ErrorMessage errors={errors} name='cellphone' />}
         />
       </Label>
       <Label>
@@ -122,7 +123,7 @@ export function Form() {
               message: 'CPF inválido',
             },
           })}
-          error={errors.cpf?.message as string}
+          error={<ErrorMessage errors={errors} name='cpf' />}
         />
       </Label>
       <Label>
@@ -137,7 +138,7 @@ export function Form() {
             },
           })}
           onBlur={handleZipCodeBlur}
-          error={errors.zipcode?.message as string}
+          error={<ErrorMessage errors={errors} name='zipcode' />}
         />
       </Label>
       <Label>
@@ -167,7 +168,7 @@ export function Form() {
           </Label>
         </div>
         <p className='text-red-400 text-xs h-4 select-none'>
-          {errors.terms?.message as string}
+          <ErrorMessage errors={errors} name='terms' />
         </p>
       </div>
 
