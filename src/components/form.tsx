@@ -1,6 +1,6 @@
 import { Loader } from 'lucide-react';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { FieldValues, useForm } from 'react-hook-form';
 import { withMask } from 'use-mask-input';
 
 import { getZipCodeInfo } from '../services/getZipCodeInfo';
@@ -13,7 +13,7 @@ export function Form() {
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = useForm();
 
   const handleZipCodeBlur = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -21,7 +21,7 @@ export function Form() {
     getZipCodeInfo(zipcode, setAddress);
   };
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: FieldValues) => {
     const response = await fetch(
       'https://apis.codante.io/api/register-user/register',
       { method: 'POST', body: JSON.stringify(data) },
@@ -42,51 +42,109 @@ export function Form() {
 
       <Label>
         Nome completo:
-        <Input type='text' {...register('name')} />
+        <Input
+          type='text'
+          {...register('name', {
+            required: 'Esse campo precisa ser preenchido',
+          })}
+          error={errors.name?.message as string}
+        />
       </Label>
 
       <Label>
         Email:
-        <Input type='email' {...register('email')} />
+        <Input
+          type='email'
+          {...register('email', {
+            required: 'Esse campo precisa ser preenchido',
+          })}
+          error={errors.email?.message as string}
+        />
       </Label>
 
       <Label>
         Senha:
-        <Input id='password' {...register('password')} />
+        <Input
+          id='password'
+          {...register('password', {
+            required: 'Esse campo precisa ser preenchido',
+          })}
+          error={errors.password?.message as string}
+        />
       </Label>
 
       <Label>
         Confirmar senha:
-        <Input id='password' />
+        <Input
+          id='password'
+          {...register('confirmPassword', {
+            required: 'Esse campo precisa ser preenchido',
+          })}
+          error={errors.confirmPassword?.message as string}
+        />
       </Label>
 
       <Label>
         Número de celular:
-        <Input type='text' ref={withMask('(99) 99999-9999')} />
+        <Input
+          type='text'
+          {...register('cellphone', {
+            required: 'Esse campo precisa ser preenchido',
+          })}
+          ref={withMask('(99) 99999-9999')}
+          error={errors.cellphone?.message as string}
+        />
       </Label>
 
       <Label>
         CPF:
-        <Input type='text' ref={withMask('999.999.999-99')} />
+        <Input
+          type='text'
+          {...register('cpf', {
+            required: 'Esse campo precisa ser preenchido',
+          })}
+          ref={withMask('999.999.999-99')}
+          error={errors.cpf?.message as string}
+        />
       </Label>
 
       <Label>
         CEP:
         <Input
           type='text'
+          {...register('zipcode', {
+            required: 'Esse campo precisa ser preenchido',
+          })}
           ref={withMask('99999-999')}
           onBlur={handleZipCodeBlur}
+          error={errors.zipcode?.message as string}
         />
       </Label>
 
       <Label>
         Endereço:
-        <Input type='text' value={address.street} readOnly />
+        <Input
+          type='text'
+          value={address.street}
+          readOnly
+          {...register('street', {
+            required: 'Esse campo precisa ser preenchido',
+          })}
+          error={errors.street?.message as string}
+        />
       </Label>
 
       <Label>
         Cidade:
-        <Input type='text' value={address.city} readOnly />
+        <Input
+          type='text'
+          value={address.city}
+          readOnly
+          {...register('city', {
+            required: 'Esse campo precisa ser preenchido',
+          })}
+          error={errors.city?.message as string}
+        />
       </Label>
 
       <Button disabled={isSubmitting} className='mt-4'>
