@@ -1,3 +1,4 @@
+import { Loader } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { withMask } from 'use-mask-input';
@@ -12,6 +13,7 @@ export function Form() {
   const {
     register,
     handleSubmit,
+    formState: { isSubmitting },
   } = useForm();
 
   const handleZipCodeBlur = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -87,7 +89,9 @@ export function Form() {
         <Input type='text' value={address.city} readOnly />
       </Label>
 
-      <Button className='mt-4'>Cadastrar</Button>
+      <Button disabled={isSubmitting} className='mt-4'>
+        {isSubmitting ? <Loader className='animate-spin' /> : 'Cadastrar'}
+      </Button>
     </form>
   );
 }
