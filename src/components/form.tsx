@@ -1,7 +1,7 @@
 import { Loader } from 'lucide-react';
 import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
-import { withMask } from 'use-mask-input';
+import { useHookFormMask } from 'use-mask-input';
 
 import { getZipCodeInfo } from '../services/getZipCodeInfo';
 import { Button } from './ui/button';
@@ -15,6 +15,8 @@ export function Form() {
     handleSubmit,
     formState: { isSubmitting, errors },
   } = useForm();
+
+  const registerWithMask = useHookFormMask(register);
 
   const handleZipCodeBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const zipcode = e.target.value;
@@ -46,6 +48,10 @@ export function Form() {
           type='text'
           {...register('name', {
             required: 'Esse campo precisa ser preenchido',
+            maxLength: {
+              value: 255,
+              message: 'O nome deve ter no máximo 255 caracteres',
+            },
           })}
           error={errors.name?.message as string}
         />
@@ -57,6 +63,10 @@ export function Form() {
           type='email'
           {...register('email', {
             required: 'Esse campo precisa ser preenchido',
+            pattern: {
+              value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+              message: 'Email inválido',
+            },
           })}
           error={errors.email?.message as string}
         />
@@ -68,6 +78,10 @@ export function Form() {
           id='password'
           {...register('password', {
             required: 'Esse campo precisa ser preenchido',
+            minLength: {
+              value: 6,
+              message: 'A senha deve ter no mínimo 6 caracteres',
+            },
           })}
           error={errors.password?.message as string}
         />
@@ -79,6 +93,10 @@ export function Form() {
           id='password'
           {...register('confirmPassword', {
             required: 'Esse campo precisa ser preenchido',
+            minLength: {
+              value: 6,
+              message: 'A confirmação de senha deve ter no mínimo 6 caracteres',
+            },
           })}
           error={errors.confirmPassword?.message as string}
         />
@@ -88,10 +106,13 @@ export function Form() {
         Número de celular:
         <Input
           type='text'
-          {...register('cellphone', {
+          {...registerWithMask('cellphone', '(99) 99999-9999', {
             required: 'Esse campo precisa ser preenchido',
+            pattern: {
+              value: /^\(\d{2}\) \d{5}-\d{4}$/,
+              message: 'Número de celular inválido',
+            },
           })}
-          ref={withMask('(99) 99999-9999')}
           error={errors.cellphone?.message as string}
         />
       </Label>
@@ -100,10 +121,13 @@ export function Form() {
         CPF:
         <Input
           type='text'
-          {...register('cpf', {
+          {...registerWithMask('cpf', '999.999.999-99', {
             required: 'Esse campo precisa ser preenchido',
+            pattern: {
+              value: /^\d{3}\.\d{3}\.\d{3}-\d{2}$/,
+              message: 'CPF inválido',
+            },
           })}
-          ref={withMask('999.999.999-99')}
           error={errors.cpf?.message as string}
         />
       </Label>
@@ -112,10 +136,13 @@ export function Form() {
         CEP:
         <Input
           type='text'
-          {...register('zipcode', {
+          {...registerWithMask('zipcode', '99999-999', {
             required: 'Esse campo precisa ser preenchido',
+            pattern: {
+              value: /^\d{5}-\d{3}$/,
+              message: 'CEP inválido',
+            },
           })}
-          ref={withMask('99999-999')}
           onBlur={handleZipCodeBlur}
           error={errors.zipcode?.message as string}
         />
@@ -123,28 +150,12 @@ export function Form() {
 
       <Label>
         Endereço:
-        <Input
-          type='text'
-          value={address.street}
-          readOnly
-          {...register('street', {
-            required: 'Esse campo precisa ser preenchido',
-          })}
-          error={errors.street?.message as string}
-        />
+        <Input type='text' value={address.street} readOnly />
       </Label>
 
       <Label>
         Cidade:
-        <Input
-          type='text'
-          value={address.city}
-          readOnly
-          {...register('city', {
-            required: 'Esse campo precisa ser preenchido',
-          })}
-          error={errors.city?.message as string}
-        />
+        <Input type='text' value={address.city} readOnly />
       </Label>
 
       <Button disabled={isSubmitting} className='mt-4'>
