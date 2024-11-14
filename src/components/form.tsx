@@ -1,9 +1,10 @@
+import { ErrorMessage } from '@hookform/error-message';
 import { Loader } from 'lucide-react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { useHookFormMask } from 'use-mask-input';
 
-import { ErrorMessage } from '@hookform/error-message';
 import { getZipCodeInfo } from '../services/getZipCodeInfo';
+import { registerUser } from '../services/registerUser';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
@@ -13,9 +14,9 @@ export function Form() {
     register,
     handleSubmit,
     setValue,
+    setError,
     formState: { isSubmitting, errors },
   } = useForm();
-
   const registerWithMask = useHookFormMask(register);
 
   const handleZipCodeBlur = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -23,20 +24,7 @@ export function Form() {
     getZipCodeInfo(zipcode, setValue);
   };
 
-  const onSubmit = async (data: FieldValues) => {
-    const response = await fetch(
-      'https://apis.codante.io/api/register-user/register',
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      },
-    );
-
-    const result = await response.json();
-
-    console.log(result);
-  };
+  const onSubmit = async (data: FieldValues) => registerUser(data, setError);
 
   return (
     <form
