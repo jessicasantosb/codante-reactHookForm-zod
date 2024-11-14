@@ -80,8 +80,8 @@ export function Form() {
           {...register('password', {
             required: 'Esse campo precisa ser preenchido',
             minLength: {
-              value: 6,
-              message: 'A senha deve ter no mínimo 6 caracteres',
+              value: 8,
+              message: 'A senha deve ter no mínimo 8 caracteres',
             },
           })}
           error={<ErrorMessage errors={errors} name='password' />}
@@ -94,8 +94,12 @@ export function Form() {
           {...register('password_confirmation', {
             required: 'Esse campo precisa ser preenchido',
             minLength: {
-              value: 6,
-              message: 'A confirmação de senha deve ter no mínimo 6 caracteres',
+              value: 8,
+              message: 'A confirmação de senha deve ter no mínimo 8 caracteres',
+            },
+            validate(value, formValues) {
+              if (value === formValues.password) return true;
+              return 'As senhas devem coincidir';
             },
           })}
           error={<ErrorMessage errors={errors} name='password_confirmation' />}
