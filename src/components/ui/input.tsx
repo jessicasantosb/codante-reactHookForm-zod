@@ -1,8 +1,17 @@
 import { EyeIcon, EyeOff } from 'lucide-react';
-import { ComponentPropsWithRef, forwardRef, useEffect, useState } from 'react';
+import {
+  ComponentPropsWithRef,
+  forwardRef,
+  ReactNode,
+  useEffect,
+  useState,
+} from 'react';
+
 import { cn } from '../../lib/utils';
 
-type InputProps = ComponentPropsWithRef<'input'> & { error?: any };
+type InputProps = ComponentPropsWithRef<'input'> & {
+  error?: ReactNode;
+};
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ className, id, error, ...props }, ref) => {
