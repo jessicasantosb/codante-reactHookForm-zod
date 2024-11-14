@@ -1,11 +1,8 @@
+import { FieldValues, UseFormSetValue } from 'react-hook-form';
+
 export const getZipCodeInfo = async (
   zipcode: string,
-  setAddress: React.Dispatch<
-    React.SetStateAction<{
-      street: string;
-      city: string;
-    }>
-  >,
+  setValue: UseFormSetValue<FieldValues>,
 ) => {
   try {
     const response = await fetch(
@@ -13,10 +10,8 @@ export const getZipCodeInfo = async (
     );
 
     if (!response.ok) {
-      return setAddress({
-        street: 'Não encontrado',
-        city: 'Não encontrado',
-      });
+      setValue('address', 'Não encontrado');
+      setValue('city', 'Não encontrado');
     }
 
     const data = await response.json();
@@ -29,7 +24,8 @@ export const getZipCodeInfo = async (
       ((!data.city || !data.state) && 'Não encontrado') ||
       `${data.city} - ${data.state}`;
 
-    setAddress({ street: streetName, city: cityName });
+    setValue('address', streetName);
+    setValue('city', cityName);
   } catch (error) {
     console.error(error);
   }

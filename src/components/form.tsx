@@ -1,5 +1,4 @@
 import { Loader } from 'lucide-react';
-import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { useHookFormMask } from 'use-mask-input';
 
@@ -10,10 +9,10 @@ import { Input } from './ui/input';
 import { Label } from './ui/label';
 
 export function Form() {
-  const [address, setAddress] = useState({ street: '', city: '' });
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { isSubmitting, errors },
   } = useForm();
 
@@ -21,13 +20,17 @@ export function Form() {
 
   const handleZipCodeBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const zipcode = e.target.value;
-    getZipCodeInfo(zipcode, setAddress);
+    getZipCodeInfo(zipcode, setValue);
   };
 
   const onSubmit = async (data: FieldValues) => {
     const response = await fetch(
       'https://apis.codante.io/api/register-user/register',
-      { method: 'POST', body: JSON.stringify(data) },
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      },
     );
 
     const result = await response.json();
@@ -88,21 +91,21 @@ export function Form() {
         Confirmar senha:
         <Input
           id='password'
-          {...register('confirmPassword', {
+          {...register('password_confirmation', {
             required: 'Esse campo precisa ser preenchido',
             minLength: {
               value: 6,
               message: 'A confirmação de senha deve ter no mínimo 6 caracteres',
             },
           })}
-          error={<ErrorMessage errors={errors} name='confirmPassword' />}
+          error={<ErrorMessage errors={errors} name='password_confirmation' />}
         />
       </Label>
       <Label>
         Número de celular:
         <Input
           type='text'
-          {...registerWithMask('cellphone', '(99) 99999-9999', {
+          {...registerWithMask('phone', '(99) 99999-9999', {
             required: 'Esse campo precisa ser preenchido',
             pattern: {
               value: /^\(\d{2}\) \d{5}-\d{4}$/,
@@ -143,11 +146,11 @@ export function Form() {
       </Label>
       <Label>
         Endereço:
-        <Input type='text' value={address.street} readOnly />
+        <Input type='text' {...register('address')} readOnly />
       </Label>
       <Label>
         Cidade:
-        <Input type='text' value={address.city} readOnly />
+        <Input type='text' {...register('city')} readOnly />
       </Label>
 
       <div>
