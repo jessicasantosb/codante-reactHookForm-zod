@@ -8,16 +8,15 @@ import { registerUser } from '../services/registerUser';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
-import { zodResolver } from '@hookform/resolvers/zod';
 
-export function Form() {
+export function ReactHookForm() {
   const {
     register,
     handleSubmit,
     setValue,
     setError,
     formState: { isSubmitting, errors },
-  } = useForm({resolver: zodResolver({})});
+  } = useForm();
   const registerWithMask = useHookFormMask(register);
 
   const handleZipCodeBlur = (e: React.FocusEvent<HTMLInputElement>) => {
