@@ -1,14 +1,16 @@
 import { ErrorMessage } from '@hookform/error-message';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader } from 'lucide-react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { useHookFormMask } from 'use-mask-input';
 
+import type { UserRegister } from '../schema';
+import { userRegisterSchema } from '../schema';
 import { getZipCodeInfo } from '../services/getZipCodeInfo';
 import { registerUser } from '../services/registerUser';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
-import { zodResolver } from '@hookform/resolvers/zod';
 
 export function Form() {
   const {
@@ -17,7 +19,7 @@ export function Form() {
     setValue,
     setError,
     formState: { isSubmitting, errors },
-  } = useForm({resolver: zodResolver({})});
+  } = useForm<UserRegister>({ resolver: zodResolver(userRegisterSchema) });
   const registerWithMask = useHookFormMask(register);
 
   const handleZipCodeBlur = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -38,13 +40,7 @@ export function Form() {
         Nome completo:
         <Input
           type='text'
-          {...register('name', {
-            required: 'Esse campo precisa ser preenchido',
-            maxLength: {
-              value: 255,
-              message: 'O nome deve ter no máximo 255 caracteres',
-            },
-          })}
+          {...register('name')}
           error={<ErrorMessage errors={errors} name='name' />}
         />
       </Label>
@@ -52,13 +48,7 @@ export function Form() {
         Email:
         <Input
           type='email'
-          {...register('email', {
-            required: 'Esse campo precisa ser preenchido',
-            pattern: {
-              value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-              message: 'Email inválido',
-            },
-          })}
+          {...register('email')}
           error={<ErrorMessage errors={errors} name='email' />}
         />
       </Label>
@@ -66,13 +56,7 @@ export function Form() {
         Senha:
         <Input
           id='password'
-          {...register('password', {
-            required: 'Esse campo precisa ser preenchido',
-            minLength: {
-              value: 8,
-              message: 'A senha deve ter no mínimo 8 caracteres',
-            },
-          })}
+          {...register('password')}
           error={<ErrorMessage errors={errors} name='password' />}
         />
       </Label>
@@ -80,17 +64,7 @@ export function Form() {
         Confirmar senha:
         <Input
           id='password'
-          {...register('password_confirmation', {
-            required: 'Esse campo precisa ser preenchido',
-            minLength: {
-              value: 8,
-              message: 'A confirmação de senha deve ter no mínimo 8 caracteres',
-            },
-            validate(value, formValues) {
-              if (value === formValues.password) return true;
-              return 'As senhas devem coincidir';
-            },
-          })}
+          {...register('password_confirmation')}
           error={<ErrorMessage errors={errors} name='password_confirmation' />}
         />
       </Label>
@@ -98,27 +72,15 @@ export function Form() {
         Número de celular:
         <Input
           type='text'
-          {...registerWithMask('phone', '(99) 99999-9999', {
-            required: 'Esse campo precisa ser preenchido',
-            pattern: {
-              value: /^\(\d{2}\) \d{5}-\d{4}$/,
-              message: 'Número de celular inválido',
-            },
-          })}
-          error={<ErrorMessage errors={errors} name='cellphone' />}
+          {...registerWithMask('phone', '(99) 99999-9999')}
+          error={<ErrorMessage errors={errors} name='phone' />}
         />
       </Label>
       <Label>
         CPF:
         <Input
           type='text'
-          {...registerWithMask('cpf', '999.999.999-99', {
-            required: 'Esse campo precisa ser preenchido',
-            pattern: {
-              value: /^\d{3}\.\d{3}\.\d{3}-\d{2}$/,
-              message: 'CPF inválido',
-            },
-          })}
+          {...registerWithMask('cpf', '999.999.999-99')}
           error={<ErrorMessage errors={errors} name='cpf' />}
         />
       </Label>
@@ -126,13 +88,7 @@ export function Form() {
         CEP:
         <Input
           type='text'
-          {...registerWithMask('zipcode', '99999-999', {
-            required: 'Esse campo precisa ser preenchido',
-            pattern: {
-              value: /^\d{5}-\d{3}$/,
-              message: 'CEP inválido',
-            },
-          })}
+          {...registerWithMask('zipcode', '99999-999')}
           onBlur={handleZipCodeBlur}
           error={<ErrorMessage errors={errors} name='zipcode' />}
         />
@@ -152,11 +108,9 @@ export function Form() {
             type='checkbox'
             id='checkbox'
             className='mr-2 accent-[#4C4B16]'
-            {...register('terms', {
-              required: 'Os termos e condições devem ser aceitos',
-            })}
+            {...register('terms')}
           />
-          <Label className='text-sm  font-light text-slate-500 inline'>
+          <Label className='text-sm font-light text-slate-500 inline'>
             Aceito os{' '}
             <span className='underline hover:text-slate-900 cursor-pointer'>
               termos e condições

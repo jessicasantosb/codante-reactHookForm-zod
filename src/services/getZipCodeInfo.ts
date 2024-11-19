@@ -1,8 +1,19 @@
-import { FieldValues, UseFormSetValue } from 'react-hook-form';
+import { UseFormSetValue } from 'react-hook-form';
 
 export const getZipCodeInfo = async (
   zipcode: string,
-  setValue: UseFormSetValue<FieldValues>,
+  setValue: UseFormSetValue<{
+    name: string;
+    email: string;
+    password: string;
+    password_confirmation: string;
+    phone: string;
+    cpf: string;
+    zipcode: string;
+    address: string;
+    city: string;
+    terms: boolean;
+  }>,
 ) => {
   try {
     const response = await fetch(

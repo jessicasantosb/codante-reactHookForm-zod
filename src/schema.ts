@@ -37,7 +37,9 @@ export const userRegisterSchema = z.object({
     .string()
     .min(1, { message: 'O campo endereço precisa ser preenchido' }),
   city: z.string().min(1, { message: 'O campo cidade precisa ser preenchido' }),
-  terms: z.boolean({ message: 'Você precisa aceitar os termos de uso' }),
+  terms: z.boolean().refine((value) => value === true, {
+    message: 'Você precisa aceitar os termos de uso',
+  }),
 });
 
 export type UserRegister = z.infer<typeof userRegisterSchema>;
