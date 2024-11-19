@@ -39,7 +39,6 @@ export function Form() {
       <Label>
         Nome completo:
         <Input
-          type='text'
           {...register('name')}
           error={<ErrorMessage errors={errors} name='name' />}
         />
@@ -55,7 +54,7 @@ export function Form() {
       <Label>
         Senha:
         <Input
-          id='password'
+          type='password'
           {...register('password')}
           error={<ErrorMessage errors={errors} name='password' />}
         />
@@ -63,7 +62,7 @@ export function Form() {
       <Label>
         Confirmar senha:
         <Input
-          id='password'
+          type='password'
           {...register('password_confirmation')}
           error={<ErrorMessage errors={errors} name='password_confirmation' />}
         />
@@ -71,7 +70,6 @@ export function Form() {
       <Label>
         Número de celular:
         <Input
-          type='text'
           {...registerWithMask('phone', '(99) 99999-9999')}
           error={<ErrorMessage errors={errors} name='phone' />}
         />
@@ -79,7 +77,6 @@ export function Form() {
       <Label>
         CPF:
         <Input
-          type='text'
           {...registerWithMask('cpf', '999.999.999-99')}
           error={<ErrorMessage errors={errors} name='cpf' />}
         />
@@ -87,7 +84,6 @@ export function Form() {
       <Label>
         CEP:
         <Input
-          type='text'
           {...registerWithMask('zipcode', '99999-999')}
           onBlur={handleZipCodeBlur}
           error={<ErrorMessage errors={errors} name='zipcode' />}
@@ -95,18 +91,17 @@ export function Form() {
       </Label>
       <Label>
         Endereço:
-        <Input type='text' {...register('address')} readOnly />
+        <Input {...register('address')} readOnly />
       </Label>
       <Label>
         Cidade:
-        <Input type='text' {...register('city')} readOnly />
+        <Input {...register('city')} readOnly />
       </Label>
 
       <div>
         <div className='flex items-center'>
           <Input
             type='checkbox'
-            id='checkbox'
             className='mr-2 accent-[#4C4B16]'
             {...register('terms')}
           />
