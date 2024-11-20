@@ -1,19 +1,9 @@
 import { UseFormSetValue } from 'react-hook-form';
+import { UserRegister } from '../schema';
 
 export const getZipCodeInfo = async (
   zipcode: string,
-  setValue: UseFormSetValue<{
-    name: string;
-    email: string;
-    password: string;
-    password_confirmation: string;
-    phone: string;
-    cpf: string;
-    zipcode: string;
-    address: string;
-    city: string;
-    terms: boolean;
-  }>,
+  setValue: UseFormSetValue<UserRegister>,
 ) => {
   try {
     const response = await fetch(
