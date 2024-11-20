@@ -1,4 +1,5 @@
 import { FieldValues, UseFormSetError } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { UserRegister } from '../schema';
 
 export const registerUser = async (
@@ -22,7 +23,9 @@ export const registerUser = async (
         type: 'manual',
         message: result.errors[field],
       });
+    toast.error('Error ao cadastrar o usuário.');
   } else {
     console.log(result);
+    toast.success('Usuário cadastrado com sucesso!');
   }
 };
