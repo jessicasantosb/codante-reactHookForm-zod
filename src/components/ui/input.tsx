@@ -1,13 +1,17 @@
+import { ErrorMessage } from '@hookform/error-message';
 import { EyeIcon, EyeOff } from 'lucide-react';
-import { ComponentPropsWithRef, forwardRef, ReactNode, useState } from 'react';
+import { ComponentPropsWithRef, forwardRef, useState } from 'react';
+import { FieldErrors } from 'react-hook-form';
 import { twMerge } from 'tailwind-merge';
 
+import { UserRegister } from '../../schema';
+
 type InputProps = ComponentPropsWithRef<'input'> & {
-  error?: ReactNode;
+  errors?: FieldErrors<UserRegister>;
 };
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type = 'text', error, ...props }, ref) => {
+  ({ className, type = 'text', errors, ...props }, ref) => {
     const [inputType, setInputType] = useState<string | undefined>(type);
 
     const handleEyeIcon = () => {
@@ -42,7 +46,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           )}
         </div>
 
-        <p className='text-red-400 text-xs mt-1 h-1 select-none'>{error}</p>
+        {errors && props.name && (
+          <p className='text-red-400 text-xs mt-1 h-1 select-none'>
+            <ErrorMessage
+              errors={errors}
+              name={props.name as keyof UserRegister}
+            />
+          </p>
+        )}
       </>
     );
   },

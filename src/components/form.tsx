@@ -36,57 +36,41 @@ export function Form() {
       <h3 className='pb-4 text-2xl text-center text-[#4C4B16] font-bold tracking-wider'>
         Formulário Dinâmico
       </h3>
-      <Label>
-        Nome completo:
-        <Input
-          {...register('name')}
-          error={<ErrorMessage errors={errors} name='name' />}
-        />
-      </Label>
+      <Label>Nome completo:</Label>
+      <Input {...register('name')} errors={errors} />
       <Label>
         Email:
-        <Input
-          type='email'
-          {...register('email')}
-          error={<ErrorMessage errors={errors} name='email' />}
-        />
+        <Input type='email' {...register('email')} errors={errors} />
       </Label>
       <Label>
         Senha:
-        <Input
-          type='password'
-          {...register('password')}
-          error={<ErrorMessage errors={errors} name='password' />}
-        />
+        <Input type='password' {...register('password')} errors={errors} />
       </Label>
       <Label>
         Confirmar senha:
         <Input
           type='password'
           {...register('password_confirmation')}
-          error={<ErrorMessage errors={errors} name='password_confirmation' />}
+          errors={errors}
         />
       </Label>
       <Label>
         Número de celular:
         <Input
           {...registerWithMask('phone', '(99) 99999-9999')}
-          error={<ErrorMessage errors={errors} name='phone' />}
+          errors={errors}
         />
       </Label>
       <Label>
         CPF:
-        <Input
-          {...registerWithMask('cpf', '999.999.999-99')}
-          error={<ErrorMessage errors={errors} name='cpf' />}
-        />
+        <Input {...registerWithMask('cpf', '999.999.999-99')} errors={errors} />
       </Label>
       <Label>
         CEP:
         <Input
           {...registerWithMask('zipcode', '99999-999')}
           onBlur={handleZipCodeBlur}
-          error={<ErrorMessage errors={errors} name='zipcode' />}
+          errors={errors}
         />
       </Label>
       <Label>
