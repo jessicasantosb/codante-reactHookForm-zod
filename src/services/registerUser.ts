@@ -1,10 +1,11 @@
-import { FieldValues, UseFormSetError } from 'react-hook-form';
+import { FieldValues, UseFormReset, UseFormSetError } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { UserRegister } from '../schema';
 
 export const registerUser = async (
   data: FieldValues,
   setError: UseFormSetError<UserRegister>,
+  reset: UseFormReset<UserRegister>,
 ) => {
   const response = await fetch(
     'https://apis.codante.io/api/register-user/register',
@@ -25,7 +26,7 @@ export const registerUser = async (
       });
     toast.error('Error ao cadastrar o usuário.');
   } else {
-    console.log(result);
     toast.success('Usuário cadastrado com sucesso!');
+    reset();
   }
 };

@@ -18,6 +18,7 @@ export function Form() {
     handleSubmit,
     setValue,
     setError,
+    reset,
     formState: { isSubmitting, errors },
   } = useForm<UserRegister>({ resolver: zodResolver(userRegisterSchema) });
   const registerWithMask = useHookFormMask(register);
@@ -27,7 +28,8 @@ export function Form() {
     getZipCodeInfo(zipcode, setValue);
   };
 
-  const onSubmit = async (data: FieldValues) => registerUser(data, setError);
+  const onSubmit = async (data: FieldValues) =>
+    registerUser(data, setError, reset);
 
   return (
     <form
