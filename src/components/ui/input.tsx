@@ -18,14 +18,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       setInputType(inputType === 'password' ? 'text' : 'password');
     };
 
-    const checkboxStyle =
-      type === 'checkbox' &&
-      'focus-within:outline-none outline-none border-none';
+    const outlineStyle =
+      type === 'checkbox'
+        ? 'focus-within:outline-none outline-none'
+        : 'border outline-2 outline-[#4C4B16] focus-within:outline';
 
     return (
       <>
         <div
-          className={`flex justify-between rounded-sm border outline-2 group outline-[#4C4B16] focus-within:outline ${checkboxStyle}`}>
+          className={`flex justify-between rounded-sm group ${outlineStyle}`}>
           <input
             ref={ref}
             type={inputType}
