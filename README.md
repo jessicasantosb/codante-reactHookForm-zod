@@ -53,7 +53,7 @@ Estou motivada a aprimorar minha expertise em React Hook Form e Zod, visando mel
 ```
 
 ```sh
-❯ pnpm
+❯ pnpm install
 ```
 
 ```sh
