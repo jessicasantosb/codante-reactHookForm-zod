@@ -38,8 +38,10 @@ export function Form() {
       <h3 className='pb-4 text-2xl text-center text-[#4C4B16] font-bold tracking-wider'>
         Formulário Dinâmico
       </h3>
-      <Label>Nome completo:</Label>
-      <Input {...register('name')} errors={errors} />
+      <Label>
+        Nome completo:
+        <Input {...register('name')} errors={errors} />
+      </Label>
       <Label>
         Email:
         <Input type='email' {...register('email')} errors={errors} />
